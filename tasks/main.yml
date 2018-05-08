@@ -1,2 +1,23 @@
 ---
 # tasks file for ansible-deeplearning
+
+- name: Check if CUDA-9.0 is installed
+  command: echo
+  register: cuda_9.0_installed
+  failed_when: cuda_9.0_install.rc > 1
+  changed_when: cuda_9.0_install.rc == 1
+
+- name: Check if CUDA-9.1 is installed
+  command: echo
+  register: cuda_9.1_installed
+  failed_when: cuda_9.1_install.rc > 1
+  changed_when: cuda_9.1_install.rc == 1
+
+ - name: Download CUDA-9.0
+      get_url: 
+        url="https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run"
+        dest="/tmp/cuda_9.0.176_384.81_linux-run"
+      when: cuda_9.0_installed.rc == 1
+
+  
+    
